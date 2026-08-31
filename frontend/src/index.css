@@ -2,145 +2,438 @@
 @tailwind components;
 @tailwind utilities;
 
+html {
+  scroll-behavior: smooth;
+  -webkit-tap-highlight-color: transparent;
+}
+
 * {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
 body {
-  background: #050508;
+  background-color: #f8fafc;
+  color: #1e293b;
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
   overflow-x: hidden;
-  font-family: 'Inter', system-ui, sans-serif;
 }
 
-/* Liquid Glass Utilities */
+/* ==========================================================================
+   TRANSLUCENT BLUE TOP BAR & CLEAN LIGHT THEME ERP DESIGN SYSTEM
+   ========================================================================== */
+
+/* Main Background Surface */
+.erp-bg {
+  background-color: #f8fafc;
+  min-height: 100vh;
+}
+
+/* Translucent Blue Material Header Bar - Color matching exact image (#1a3693) */
+.material-header {
+  background-color: rgba(26, 54, 147, 0.85);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 4px 20px rgba(26, 54, 147, 0.15);
+}
+
+/* Sidebar Layout & Lockable Expand Mechanics */
+.erp-sidebar {
+  background-color: #ffffff;
+  border-right: 1px solid #e2e8f0;
+  transition: width 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: width;
+}
+
+.erp-sidebar-header {
+  background-color: #28267f;
+  color: #ffffff;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Nav Item Styling matching user reference images */
+.erp-nav-item {
+  color: #475569;
+  border-radius: 0px;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  border-left: 4px solid transparent;
+}
+
+.erp-nav-item:hover {
+  background-color: #f8fafc;
+  color: #0f172a;
+}
+
+.erp-nav-item.active {
+  background-color: #f0f2fe;
+  color: #28267f;
+  font-weight: 600;
+  border-left: 4px solid #28267f;
+}
+
+/* Solid Light Material Card Surface */
+.material-card {
+  background-color: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 16px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.04);
+  transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.material-card-hover:hover {
+  transform: translateY(-2px);
+  border-color: #cbd5e1;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+}
+
+/* ==========================================================================
+   UIVERSE DUAL-SKEW SLICE ANIMATED BUTTONS (Theme-Aligned)
+   ========================================================================== */
+
+.btn,
+.material-btn,
+.material-btn-primary,
+.material-btn-success,
+.topbar-btn {
+  --color: #1a3693;
+  --color2: #ffffff;
+  padding: 0.5rem 1rem;
+  background-color: transparent;
+  border-radius: 8px;
+  border: 1px solid var(--color);
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+  z-index: 1;
+  font-weight: 500;
+  font-size: 12px;
+  color: var(--color);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  isolation: isolate;
+}
+
+.btn > *,
+.material-btn > *,
+.material-btn-primary > *,
+.material-btn-success > *,
+.topbar-btn > * {
+  position: relative;
+  z-index: 1;
+  transition: color 0.35s ease;
+}
+
+.btn::after, .btn::before,
+.material-btn::after, .material-btn::before,
+.material-btn-primary::after, .material-btn-primary::before,
+.material-btn-success::after, .material-btn-success::before,
+.topbar-btn::after, .topbar-btn::before {
+  content: '';
+  display: block;
+  height: 100%;
+  width: 100%;
+  transform: skew(90deg) translate(-50%, -50%);
+  position: absolute;
+  inset: 50%;
+  left: 25%;
+  z-index: -1;
+  transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+  background-color: var(--color);
+}
+
+.btn::before,
+.material-btn::before,
+.material-btn-primary::before,
+.material-btn-success::before,
+.topbar-btn::before {
+  top: -50%;
+  left: -25%;
+  transform: skew(90deg) rotate(180deg) translate(-50%, -50%);
+}
+
+.btn:hover::before,
+.material-btn:hover::before,
+.material-btn-primary:hover::before,
+.material-btn-success:hover::before,
+.topbar-btn:hover::before {
+  transform: skew(45deg) rotate(180deg) translate(-50%, -50%);
+}
+
+.btn:hover::after,
+.material-btn:hover::after,
+.material-btn-primary:hover::after,
+.material-btn-success:hover::after,
+.topbar-btn:hover::after {
+  transform: skew(45deg) translate(-50%, -50%);
+}
+
+.btn:hover, .btn:hover > *,
+.material-btn:hover, .material-btn:hover > *,
+.material-btn-primary:hover, .material-btn-primary:hover > *,
+.material-btn-success:hover, .material-btn-success:hover > *,
+.topbar-btn:hover, .topbar-btn:hover > * {
+  color: var(--color2);
+}
+
+.btn:active,
+.material-btn:active,
+.material-btn-primary:active,
+.material-btn-success:active,
+.topbar-btn:active {
+  filter: brightness(0.9);
+  transform: scale(0.98);
+}
+
+/* Standard Theme Outline/Light Button */
+.material-btn {
+  --color: #1a3693;
+  --color2: #ffffff;
+  background-color: #ffffff;
+  border: 1px solid #cbd5e1;
+  color: #334155;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
+}
+
+.material-btn::after, .material-btn::before {
+  background-color: #1a3693;
+}
+
+/* Primary Royal Blue Solid Button */
+.material-btn-primary {
+  --color: #2563eb;
+  --color2: #ffffff;
+  background-color: #1a3693;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  color: #ffffff;
+  box-shadow: 0 4px 14px rgba(26, 54, 147, 0.25);
+}
+
+.material-btn-primary::after, .material-btn-primary::before {
+  background-color: #2563eb;
+}
+
+/* Success Emerald Green Solid Button */
+.material-btn-success {
+  --color: #10b981;
+  --color2: #ffffff;
+  background-color: #047857;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  color: #ffffff;
+  box-shadow: 0 4px 14px rgba(16, 185, 129, 0.25);
+}
+
+.material-btn-success::after, .material-btn-success::before {
+  background-color: #10b981;
+}
+
+/* Topbar Translucent Action Buttons with Dual-Skew Slice Fill */
+.topbar-btn {
+  --color: #ffffff;
+  --color2: #1a3693;
+  background-color: rgba(255, 255, 255, 0.15);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  color: #ffffff;
+  padding: 0.45rem 0.85rem;
+  border-radius: 8px;
+  font-size: 11px;
+  font-weight: 600;
+}
+
+.topbar-btn::after, .topbar-btn::before {
+  background-color: #ffffff;
+}
+
+.topbar-btn:hover, .topbar-btn:hover > * {
+  color: #1a3693 !important;
+}
+
+/* Topbar Navigation Menu Tabs with Dual-Skew Slice Fill */
+.topbar-nav-btn {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  padding: 0.4rem 0.85rem;
+  border-radius: 8px;
+  border: 1px solid transparent;
+  font-weight: 500;
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.85);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  cursor: pointer;
+  transition: all 0.35s ease;
+}
+
+.topbar-nav-btn > * {
+  position: relative;
+  z-index: 1;
+  transition: color 0.35s ease;
+}
+
+.topbar-nav-btn::after, .topbar-nav-btn::before {
+  content: '';
+  display: block;
+  height: 100%;
+  width: 100%;
+  transform: skew(90deg) translate(-50%, -50%);
+  position: absolute;
+  inset: 50%;
+  left: 25%;
+  z-index: -1;
+  transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+  background-color: #ffffff;
+}
+
+.topbar-nav-btn::before {
+  top: -50%;
+  left: -25%;
+  transform: skew(90deg) rotate(180deg) translate(-50%, -50%);
+}
+
+.topbar-nav-btn:hover::before {
+  transform: skew(45deg) rotate(180deg) translate(-50%, -50%);
+}
+
+.topbar-nav-btn:hover::after {
+  transform: skew(45deg) translate(-50%, -50%);
+}
+
+.topbar-nav-btn:hover, .topbar-nav-btn:hover > * {
+  color: #1a3693 !important;
+}
+
+.topbar-nav-btn.active {
+  background-color: #ffffff;
+  color: #1a3693;
+  font-weight: 700;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+.topbar-nav-btn.active > * {
+  color: #1a3693 !important;
+}
+
+/* Material Input Controls */
+.material-input {
+  background-color: #ffffff;
+  border: 1px solid #cbd5e1;
+  color: #0f172a;
+  border-radius: 8px;
+  padding: 8px 12px;
+  outline: none;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.material-input:focus {
+  border-color: #2563eb;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
+}
+
+/* Glassmorphism utility classes for light theme */
 .glass {
-  background: rgba(255, 255, 255, 0.06);
-  backdrop-filter: blur(24px) saturate(180%);
-  -webkit-backdrop-filter: blur(24px) saturate(180%);
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  box-shadow: 
-    0 8px 32px rgba(0, 0, 0, 0.4),
-    inset 0 1px 0 rgba(255, 255, 255, 0.15),
-    inset 0 -1px 0 rgba(255, 255, 255, 0.05);
+  background: #ffffff;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid #e2e8f0;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
 }
 
 .glass-strong {
-  background: rgba(255, 255, 255, 0.10);
-  backdrop-filter: blur(40px) saturate(200%);
-  -webkit-backdrop-filter: blur(40px) saturate(200%);
-  border: 1px solid rgba(255, 255, 255, 0.18);
-  box-shadow: 
-    0 16px 48px rgba(0, 0, 0, 0.5),
-    inset 0 1px 0 rgba(255, 255, 255, 0.2);
+  background: #ffffff;
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid #e2e8f0;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.12);
 }
 
 .glass-subtle {
-  background: rgba(255, 255, 255, 0.03);
-  backdrop-filter: blur(16px) saturate(150%);
-  -webkit-backdrop-filter: blur(16px) saturate(150%);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
 }
 
 .glass-button {
-  background: linear-gradient(135deg, rgba(255,255,255,0.12), rgba(255,255,255,0.06));
-  backdrop-filter: blur(20px);
-  border: 1px solid rgba(255,255,255,0.15);
-  box-shadow: 
-    0 4px 16px rgba(0,0,0,0.3),
-    inset 0 1px 0 rgba(255,255,255,0.2);
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  background: #f1f5f9;
+  border: 1px solid #cbd5e1;
+  color: #1e293b;
+  transition: all 0.15s ease;
 }
 
 .glass-button:hover {
-  background: linear-gradient(135deg, rgba(255,255,255,0.18), rgba(255,255,255,0.10));
-  transform: translateY(-1px);
-  box-shadow: 
-    0 8px 24px rgba(0,0,0,0.4),
-    inset 0 1px 0 rgba(255,255,255,0.25);
-  border-color: rgba(255,255,255,0.25);
+  background: #e2e8f0;
+  color: #0f172a;
 }
 
-.glass-button:active {
-  transform: translateY(0px) scale(0.98);
-}
-
-/* Mesh gradient background */
-.mesh-bg {
-  position: fixed;
-  inset: 0;
-  z-index: -1;
-  background: #050508;
-  overflow: hidden;
-}
-
-.mesh-blob {
-  position: absolute;
-  border-radius: 50%;
-  filter: blur(80px);
-  opacity: 0.6;
-  mix-blend-mode: screen;
-}
-
-.blob-1 {
-  width: 600px;
-  height: 600px;
-  background: radial-gradient(circle, #6366f1 0%, #8b5cf6 50%, transparent 70%);
-  top: -100px;
-  left: -100px;
-  animation: blob 12s infinite;
-}
-
-.blob-2 {
-  width: 800px;
-  height: 800px;
-  background: radial-gradient(circle, #06b6d4 0%, #3b82f6 50%, transparent 70%);
-  top: 20%;
-  right: -200px;
-  animation: blob 15s infinite reverse;
-}
-
-.blob-3 {
-  width: 700px;
-  height: 700px;
-  background: radial-gradient(circle, #ec4899 0%, #f59e0b 50%, transparent 70%);
-  bottom: -200px;
-  left: 30%;
-  animation: blob 18s infinite;
-}
-
-.blob-4 {
-  width: 500px;
-  height: 500px;
-  background: radial-gradient(circle, #10b981 0%, #06b6d4 50%, transparent 70%);
-  top: 60%;
-  left: -100px;
-  animation: blob 10s infinite reverse;
-}
-
-/* Scrollbar */
+/* Custom Scrollbars */
 ::-webkit-scrollbar {
   width: 6px;
   height: 6px;
 }
+
 ::-webkit-scrollbar-track {
-  background: rgba(255,255,255,0.03);
-  border-radius: 3px;
-}
-::-webkit-scrollbar-thumb {
-  background: rgba(255,255,255,0.15);
-  border-radius: 3px;
-}
-::-webkit-scrollbar-thumb:hover {
-  background: rgba(255,255,255,0.25);
+  background: #f1f5f9;
 }
 
-/* Shimmer */
-.shimmer {
-  background: linear-gradient(90deg, 
-    transparent, 
-    rgba(255,255,255,0.1), 
-    transparent);
-  background-size: 200% 100%;
-  animation: shimmer 2s infinite;
+::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 9999px;
 }
+
+::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}
+
+/* Custom Animated Fill Button */
+.button {
+  position: relative;
+  overflow: hidden;
+  height: 3rem;
+  padding: 0 2rem;
+  border-radius: 1.5rem;
+  background: #3d3a4e;
+  background-size: 400%;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  display: inline-flex;
+  items-center: center;
+  justify-content: center;
+  font-weight: 500;
+  font-size: 0.875rem;
+  transition: all 0.3s ease;
+}
+
+.button:hover::before {
+  transform: scaleX(1);
+}
+
+.button-content {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.button::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  transform: scaleX(0);
+  transform-origin: 0 50%;
+  width: 100%;
+  height: inherit;
+  border-radius: inherit;
+  background: linear-gradient(
+    82.3deg,
+    rgba(150, 93, 233, 1) 10.8%,
+    rgba(99, 88, 238, 1) 94.3%
+  );
+  transition: all 0.475s;
+}
+

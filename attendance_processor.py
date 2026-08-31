@@ -1,6 +1,6 @@
 """
 Autocrat Solutions - Attendance Processor Core
-Liquid Glass Edition
+Enterprise Edition
 
 This module converts raw biometric / manual attendance Excel dumps into
 formatted, HR-ready monthly attendance sheets.
@@ -456,7 +456,7 @@ def save_formatted_excel(output_path, cleaned_df, daily_df, matrix_df, summary_d
 # CLI usage
 if __name__ == "__main__":
     import argparse
-    parser = argparse.ArgumentParser(description="Autocrat Attendance Processor - Liquid Glass")
+    parser = argparse.ArgumentParser(description="Autocrat Attendance Processor")
     parser.add_argument("input", help="Input Excel file")
     parser.add_argument("-o", "--output", help="Output Excel file", default="attendance_output.xlsx")
     parser.add_argument("-c", "--company", default="Autocrat Solutions")

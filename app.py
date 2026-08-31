@@ -1,6 +1,6 @@
 """
 Autocrat Solutions - Attendance App v0.0.1
-Liquid Glass Desktop Wrapper using pywebview
+Desktop Wrapper using pywebview
 Runs the React frontend (built) and exposes Python processor to JS
 
 v0.0.1 Spec:
@@ -87,11 +87,17 @@ class Api:
                     weekoff=params.get('weekoff', [6])
                 )
                 summary = result['summary'].to_dict(orient='records') if not result['summary'].empty else []
+                daily = result['daily'].to_dict(orient='records') if not result['daily'].empty else []
+                matrix = result['matrix'].to_dict(orient='records') if not result['matrix'].empty else []
+                cleaned = result['cleaned'].to_dict(orient='records') if not result['cleaned'].empty else []
                 return {
                     "success": True,
                     "output_path": output_path,
                     "meta": result['meta'],
                     "summary": summary,
+                    "daily": daily,
+                    "matrix": matrix,
+                    "cleaned": cleaned,
                     "total_employees": len(summary),
                     "used_custom": False,
                     "message": f"Processed with built-in logic -> {output_path}"
@@ -308,9 +314,32 @@ class Api:
         except Exception as e:
             return {"success": False, "error": str(e)}
 
+    def open_output_folder(self, folder_path=None):
+        import subprocess
+        try:
+            if not folder_path or not os.path.exists(folder_path):
+                folder_path = str(BASE_DIR)
+            if os.path.isfile(folder_path):
+                folder_path = os.path.dirname(folder_path)
+            if sys.platform == 'win32':
+                os.startfile(folder_path)
+            elif sys.platform == 'darwin':
+                subprocess.Popen(['open', folder_path])
+            else:
+                subprocess.Popen(['xdg-open', folder_path])
+            return {"success": True, "path": folder_path}
+        except Exception as e:
+            return {"success": False, "error": str(e)}
+
+    def get_sample_path(self):
+        sample = BASE_DIR / "sample.xlsx"
+        if sample.exists():
+            return {"success": True, "path": str(sample)}
+        return {"success": False, "error": "sample.xlsx not found"}
+
     def get_app_info(self):
         return {
-            "name": "Autocrat Attendance - Liquid Glass",
+            "name": "Autocrat Attendance",
             "version": "0.0.1",
             "company": "Autocrat Solutions",
             "frontend_path": str(FRONTEND_DIR),
@@ -322,7 +351,7 @@ def start_app():
     if (FRONTEND_DIR / "index.html").exists():
         url = str(FRONTEND_DIR / "index.html")
         window = webview.create_window(
-            "Autocrat Attendance - Liquid Glass v0.0.1",
+            "Autocrat Attendance v0.0.1",
             url=url,
             js_api=api,
             width=1360,

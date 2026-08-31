@@ -15,7 +15,7 @@ def run(cmd, cwd=None):
     subprocess.check_call(cmd, shell=True, cwd=cwd)
 
 def main():
-    print("=== Autocrat Attendance - Liquid Glass Build ===")
+    print("=== Autocrat Attendance Build ===")
     # 1. Install frontend deps & build
     if not (FRONTEND / "node_modules").exists():
         run("npm install", cwd=FRONTEND)
