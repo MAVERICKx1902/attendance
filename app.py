@@ -266,7 +266,7 @@ class Api:
             if file_type == "python":
                 types = ('Python Files (*.py)', 'All files (*.*)')
             else:
-                types = ('Excel Files (*.xlsx;*.xls)', 'All files (*.*)')
+                types = ('Data Files (*.xlsx;*.xls;*.csv)', 'All files (*.*)')
             result = webview.windows[0].create_file_dialog(webview.OPEN_DIALOG, file_types=types)
             if result and len(result) > 0:
                 return result[0]
